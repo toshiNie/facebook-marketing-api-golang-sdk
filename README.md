@@ -31,7 +31,7 @@ import(
 )
 
 func main(){
-fbService, _ := v14.New(l, accessToken, appSecret)
+fbService, _  := v14.New(fb.NewClient(_accessToken, _clientSecret))
 
 // [Code snippets from other example below go here]
 }
