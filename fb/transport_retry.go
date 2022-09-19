@@ -2,30 +2,30 @@ package fb
 
 import (
 	"fmt"
-	"net/http"
-	"time"
-
 	"github.com/cenk/backoff"
+	"net/http"
 )
 
 type retryTransport struct {
 	next http.RoundTripper
+	bo   backoff.BackOff
 }
 
-func newRetryTransport(next http.RoundTripper) http.RoundTripper {
+func NewRetryTransport(bo backoff.BackOff, next http.RoundTripper) http.RoundTripper {
 	if next == nil {
 		next = http.DefaultTransport
+	}
+	if bo == nil {
+		bo = backoff.NewExponentialBackOff()
 	}
 
 	return &retryTransport{
 		next: next,
+		bo:   bo,
 	}
 }
 
 func (t *retryTransport) RoundTrip(r *http.Request) (*http.Response, error) {
-	bo := backoff.NewExponentialBackOff()
-	bo.InitialInterval = 6 * time.Second
-	bo.MaxElapsedTime = 10 * time.Minute
 	var resp *http.Response
 	var attempt int
 	err := backoff.Retry(func() error {
@@ -43,7 +43,7 @@ func (t *retryTransport) RoundTrip(r *http.Request) (*http.Response, error) {
 		}
 
 		return nil
-	}, backoff.WithContext(bo, r.Context()))
+	}, backoff.WithContext(t.bo, r.Context()))
 	if err != nil {
 		return nil, err
 	}

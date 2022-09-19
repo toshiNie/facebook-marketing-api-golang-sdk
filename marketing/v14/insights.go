@@ -8,24 +8,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/log/level"
 	"github.com/toshiNie/facebook-marketing-api-golang-sdk/fb"
 )
 
 // InsightsService contains all methods for working on audiences.
 type InsightsService struct {
-	l log.Logger
 	c *fb.Client
 	*fb.StatsContainer
-}
-
-func newInsightsService(l log.Logger, c *fb.Client) *InsightsService {
-	return &InsightsService{
-		l:              l,
-		c:              c,
-		StatsContainer: fb.NewStatsContainer(),
-	}
 }
 
 // NewReport creates a new InsightsRequest.
@@ -90,10 +79,8 @@ func (ir *InsightsRequest) GenerateReport(ctx context.Context, c chan<- Insight)
 	defer func() {
 		ir.StatsContainer.RemoveStats(run.ReportRunID)
 		url := fb.NewRoute(Version, "/%s", run.ReportRunID).String()
-		e := ir.c.Delete(ctx, url)
-		if e != nil {
-			_ = level.Warn(ir.l).Log("msg", "err deleting report run", "id", run.ReportRunID, "err", e, "url", url)
-		}
+		_ = ir.c.Delete(ctx, url)
+
 	}()
 
 	t := time.NewTicker(15 * time.Second)
