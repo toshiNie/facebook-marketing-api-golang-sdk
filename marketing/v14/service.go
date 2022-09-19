@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/go-kit/kit/log"
 	"github.com/toshiNie/facebook-marketing-api-golang-sdk/fb"
 )
 
@@ -32,8 +31,7 @@ type Service struct {
 }
 
 // New initializes a new Service and all the Services contained.
-func New(l log.Logger, accessToken, appSecret string) (*Service, error) {
-	c := fb.NewClient(l, accessToken, appSecret)
+func New(c *fb.Client) (*Service, error) {
 	err := c.GetJSON(context.Background(), fb.NewRoute(Version, "/me").String(), &struct{}{})
 	if err != nil {
 		return nil, err
@@ -49,7 +47,7 @@ func New(l log.Logger, accessToken, appSecret string) (*Service, error) {
 		Campaigns:         &CampaignService{c},
 		CustomConversions: &CustomConversionService{c},
 		Events:            &EventService{c},
-		Insights:          newInsightsService(l, c),
+		Insights:          &InsightsService{c, fb.NewStatsContainer()},
 		Interests:         &InterestService{c},
 		Images:            &ImageService{c},
 		Pages:             &PageService{c},

@@ -21,6 +21,24 @@ const (
 	errorStringMaxLen = 50
 )
 
+type options struct {
+	transport http.RoundTripper
+	logger    log.Logger
+}
+type Options func(opt *options)
+
+func WithTransport(t http.RoundTripper) Options {
+	return func(opt *options) {
+		opt.transport = t
+	}
+}
+
+func WithLogger(logger log.Logger) Options {
+	return func(opt *options) {
+		opt.logger = logger
+	}
+}
+
 // Client holds an http.Client and provides additional functionality.
 type Client struct {
 	l log.Logger
@@ -28,14 +46,15 @@ type Client struct {
 }
 
 // NewClient returns a http.Client containing a special transport with injects the version, token, and clientkey.
-func NewClient(l log.Logger, token, clientKey string, rt http.RoundTripper) *Client {
-	if l == nil {
-		l = log.NewNopLogger()
+func NewClient(token, clientSecret string, opts ...Options) *Client {
+	o := &options{transport: http.DefaultTransport, logger: log.NewNopLogger()}
+	for _, opt := range opts {
+		opt(o)
 	}
-
 	return &Client{
-		l:      l,
-		Client: &http.Client{Transport: newTokenTransport(token, clientKey, newRetryTransport(newLogAppUsageTransport(l, rt)))},
+		l: o.logger,
+		Client: &http.Client{
+			Transport: newTokenTransport(token, clientSecret, o.transport)},
 	}
 }
 

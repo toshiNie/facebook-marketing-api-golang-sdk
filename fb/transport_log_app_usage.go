@@ -19,7 +19,7 @@ type logAppUsageTransport struct {
 	next http.RoundTripper
 }
 
-func newLogAppUsageTransport(l log.Logger, next http.RoundTripper) http.RoundTripper {
+func NewLogAppUsageTransport(l log.Logger, next http.RoundTripper) http.RoundTripper {
 	if l == nil {
 		l = log.NewNopLogger()
 	}
