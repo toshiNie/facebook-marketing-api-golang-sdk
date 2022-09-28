@@ -227,7 +227,7 @@ func (as *AudienceService) EditIDs(ctx context.Context, audienceID string, c <-c
 				LastBatchFlag: !doWork,
 			},
 			Payload: uploadPayload{
-				Schema: "EMAIL",
+				Schema: "EMAIL_SHA256",
 				Data:   ids,
 			},
 		}
