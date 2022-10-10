@@ -74,6 +74,16 @@ func (is *ImageService) Upload(ctx context.Context, act, name string, r io.Reade
 	return im, nil
 }
 
+func (is *ImageService) Copy(ctx context.Context, fromAct, toAct string, hash string) error {
+	postData := url.Values{}
+	postData.Set("copy_from", copyFrom{
+		SourceAccountId: fromAct,
+		Hash:            hash,
+	}.String())
+	err := is.c.PostValues(ctx, fb.NewRoute(Version, "/act_%s/adimages", toAct).String(), postData)
+	return err
+}
+
 func (is *ImageService) getImageID(s string) (string, error) {
 	parsed, err := url.Parse(s)
 	if err != nil {
@@ -110,4 +120,14 @@ type Image struct {
 
 type fileUploadResponse struct {
 	Images map[string]*Image `json:"images"`
+}
+
+type copyFrom struct {
+	SourceAccountId string `json:"source_account_id"`
+	Hash            string `json:"hash"`
+}
+
+func (c copyFrom) String() string {
+	bs, _ := json.Marshal(c)
+	return string(bs)
 }

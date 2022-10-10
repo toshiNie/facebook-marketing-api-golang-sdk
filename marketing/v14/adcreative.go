@@ -220,7 +220,7 @@ type AdCreative struct {
 	// The ID of the product set for this creative. See dynamic product ads for more detail
 	ProductSetID string `json:"product_set_id,omitempty"`
 	// The status of this creative.
-	Status string `json:"status,omitempty"`
+	Status AdCreativeStatus `json:"status,omitempty"`
 	// The Tracking URL for dynamic product ads. See dynamic product ads for more detail
 	TemplateURL string `json:"template_url,omitempty"`
 	// The URL to a thumbnail for this creative.
@@ -446,7 +446,7 @@ type AdCreativeLinkDataAppLinkSpec struct {
 // AdCreativeLinkDataCallToAction see https://developers.facebook.com/docs/marketing-api/reference/ad-creative-link-data-call-to-action/
 type AdCreativeLinkDataCallToAction struct {
 	// The type of the action. Not all types can be used for all ads. Check Ads Product Guide to see which type can be used based on the objective of your campaign.
-	Type string `json:"type,omitempty"`
+	Type AdCreativeLinkDataCallToActionType `json:"type,omitempty"`
 	// JSON containing the call to action data.
 	Value *AdCreativeLinkDataCallToActionValue `json:"value,omitempty"`
 }
