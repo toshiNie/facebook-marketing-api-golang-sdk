@@ -135,7 +135,7 @@ type Ad struct {
 	AccountID     string                  `json:"account_id,omitempty"`
 	ID            string                  `json:"id,omitempty"`
 	Name          string                  `json:"name,omitempty"`
-	Status        string                  `json:"status,omitempty"`
+	Status        Status                  `json:"status,omitempty"`
 	AdsetID       string                  `json:"adset_id,omitempty"`
 	Creative      *AdCreative             `json:"creative,omitempty"`
 	Adset         *Adset                  `json:"adset,omitempty"`

@@ -172,20 +172,20 @@ type Adset struct {
 	AccountID                  string                 `json:"account_id,omitempty"`
 	AttributionSpec            json.RawMessage        `json:"attribution_spec,omitempty"`
 	BidAmount                  uint64                 `json:"bid_amount,omitempty"`
-	BidStrategy                string                 `json:"bid_strategy,omitempty"`
-	BillingEvent               string                 `json:"billing_event,omitempty"`
+	BidStrategy                BidStrategy            `json:"bid_strategy,omitempty"`
+	BillingEvent               BillingEvent           `json:"billing_event,omitempty"`
 	BudgetRemaining            float64                `json:"budget_remaining,omitempty,string"`
 	Campaign                   *Campaign              `json:"campaign,omitempty"`
 	CampaignID                 string                 `json:"campaign_id,omitempty"`
 	ConfiguredStatus           string                 `json:"configured_status,omitempty"`
-	CreatedTime                fb.Time                `json:"created_time,omitempty"`
+	CreatedTime                *fb.Time               `json:"created_time,omitempty"`
 	DailyBudget                float64                `json:"daily_budget,omitempty,string"`
 	DailyMinSpendTarget        uint64                 `json:"daily_min_spend_target,omitempty,string"`
 	DailySpendCap              uint64                 `json:"daily_spend_cap,omitempty,string"`
-	DestinationType            string                 `json:"destination_type,omitempty"`
+	DestinationType            DestinationType        `json:"destination_type,omitempty"`
 	DeliveryEstimate           *DeliveryEstimate      `json:"delivery_estimate,omitempty"`
-	EffectiveStatus            string                 `json:"effective_status,omitempty"`
-	EndTime                    fb.Time                `json:"end_time,omitempty"`
+	EffectiveStatus            EffectiveStatus        `json:"effective_status,omitempty"`
+	EndTime                    *fb.Time               `json:"end_time,omitempty"`
 	FrequencyControlSpecs      []FrequencyControlSpec `json:"frequency_control_specs,omitempty"`
 	ID                         string                 `json:"id,omitempty"`
 	LifetimeBudget             float64                `json:"lifetime_budget,omitempty,string"`
@@ -193,14 +193,14 @@ type Adset struct {
 	LifeTimeSpendCap           uint64                 `json:"lifetime_spend_cap,omitempty,string"`
 	LifetimeImps               uint64                 `json:"lifetime_imps,omitempty"`
 	Name                       string                 `json:"name,omitempty"`
-	OptimizationGoal           string                 `json:"optimization_goal,omitempty"`
+	OptimizationGoal           OptimizationGoal       `json:"optimization_goal,omitempty"`
 	PacingType                 []string               `json:"pacing_type,omitempty"`
 	PromotedObject             *PromotedObject        `json:"promoted_object,omitempty"`
 	RecurringBudgetSemantics   bool                   `json:"recurring_budget_semantics,omitempty"`
-	StartTime                  fb.Time                `json:"start_time,omitempty"`
-	Status                     string                 `json:"status,omitempty"`
+	StartTime                  *fb.Time               `json:"start_time,omitempty"`
+	Status                     Status                 `json:"status,omitempty"`
 	Targeting                  *Targeting             `json:"targeting,omitempty"`
-	UpdatedTime                fb.Time                `json:"updated_time,omitempty"`
+	UpdatedTime                *fb.Time               `json:"updated_time,omitempty"`
 	TargetingOptimizationTypes map[string]int32       `json:"targeting_optimization_types,omitempty"`
 }
 
@@ -218,6 +218,8 @@ type PromotedObject struct {
 	PixelRule          string `json:"pixel_rule,omitempty"`
 	CustomEventType    string `json:"custom_event_type,omitempty"`
 	CustomConversionID string `json:"custom_conversion_id,omitempty"`
+	ApplicationID      string `json:"application_id"`
+	ObjectStoreURL     string `json:"object_store_url"`
 }
 
 // Targeting contains all the targeting information of an adset.

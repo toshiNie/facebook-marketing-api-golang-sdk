@@ -81,6 +81,13 @@ func (rb *RouteBuilder) LocationTypes(s ...string) *RouteBuilder {
 	return rb
 }
 
+func (rb *RouteBuilder) Locate(s string) *RouteBuilder {
+	if len(s) > 0 {
+		rb.v.Set("locale", s)
+	}
+	return rb
+}
+
 // ActionBreakdowns sets the action_breakdowns param.
 func (rb *RouteBuilder) ActionBreakdowns(s string) *RouteBuilder {
 	if s != "" {

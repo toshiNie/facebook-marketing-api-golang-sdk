@@ -3,7 +3,7 @@ module github.com/toshiNie/facebook-marketing-api-golang-sdk
 go 1.12
 
 require (
-	github.com/PuerkitoBio/goquery v1.5.0
+	github.com/PuerkitoBio/goquery v1.8.0
 	github.com/cenk/backoff v2.1.1+incompatible
 	github.com/go-kit/kit v0.8.0
 	github.com/go-logfmt/logfmt v0.4.0 // indirect
