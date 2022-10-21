@@ -225,7 +225,7 @@ type PromotedObject struct {
 // Targeting contains all the targeting information of an adset.
 type Targeting struct {
 	// inventories
-	PublisherPlatforms []string `json:"publisher_platforms,omitempty"`
+	PublisherPlatforms []PublisherPlatform `json:"publisher_platforms,omitempty"`
 	// sub inventories
 	FacebookPositions        []string `json:"facebook_positions,omitempty"`
 	InstagramPositions       []string `json:"instagram_positions,omitempty"`

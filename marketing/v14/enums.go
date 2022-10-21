@@ -232,3 +232,12 @@ const (
 	AdCreativeStatusWithIssues AdCreativeStatus = "WITH_ISSUES"
 	AdCreativeStatusDeleted    AdCreativeStatus = "DELETED"
 )
+
+type PublisherPlatform string
+
+const (
+	PublisherPlatformFacebook        PublisherPlatform = "facebook"
+	PublisherPlatformInstagram       PublisherPlatform = "instagram"
+	PublisherPlatformMessenger       PublisherPlatform = "messenger"
+	PublisherPlatformAudienceNetwork PublisherPlatform = "audience_network"
+)
