@@ -202,7 +202,7 @@ func (as *AudienceService) ListCustomFiltered(ctx context.Context, act string, f
 }
 
 // EditIDs starts adding or removing ids from a custom audience.
-func (as *AudienceService) EditIDs(ctx context.Context, audienceID string, c <-chan string, doRemove bool) error {
+func (as *AudienceService) EditIDs(ctx context.Context, audienceID string, c <-chan string, doRemove bool, schema string) error {
 	bigN, err := rand.Int(rand.Reader, big.NewInt(math.MaxUint32))
 	if err != nil {
 		return fmt.Errorf("failed to generate session ID int EditIDs: %w", err)
@@ -227,7 +227,7 @@ func (as *AudienceService) EditIDs(ctx context.Context, audienceID string, c <-c
 				LastBatchFlag: !doWork,
 			},
 			Payload: uploadPayload{
-				Schema: "EMAIL_SHA256",
+				Schema: schema,
 				Data:   ids,
 			},
 		}
